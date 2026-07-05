@@ -7,6 +7,10 @@
       :description="`填画像，从 ${projectCount} 个项目里闭环匹配方案`"
     />
 
+    <div v-if="demoMode" class="panel-amber mb-4 text-xs text-amber-900">
+      当前为<strong>演示模式</strong>（未配置 API 密钥）。复制 <code class="bg-white/60 px-1 rounded">.env.example</code> 为 <code class="bg-white/60 px-1 rounded">.env</code>，填入 <code class="bg-white/60 px-1 rounded">VITE_OPENAI_API_KEY</code> 后重启 dev，即可调用真实 AI。
+    </div>
+
     <div v-if="focusProject" class="panel-brand mb-4 text-xs text-brand-900">
       正在为 <strong>「{{ focusProject.name }}」</strong> 定制方案 — 填好城市后点生成。
     </div>
@@ -114,8 +118,10 @@
 
         <div v-else-if="error" class="panel-accent bg-red-50 border-red-200 p-4 text-red-700 text-sm">{{ error }}</div>
         <div v-else-if="result" class="panel p-4">
-          <div class="flex items-center justify-end mb-4">
-            <button class="text-sm text-brand-600 hover:text-brand-700 inline-flex items-center gap-1" @click="copyResult">
+          <div class="flex items-center justify-between gap-2 mb-4 flex-wrap">
+            <span v-if="isMock" class="badge-neutral text-amber-800 bg-amber-50 border border-amber-200">演示数据 · 配置 API 密钥后切换真实 AI</span>
+            <span v-else class="badge-neutral text-green-800 bg-green-50 border border-green-200">AI 已生成</span>
+            <button class="text-sm text-brand-600 hover:text-brand-700 inline-flex items-center gap-1 ml-auto" @click="copyResult">
               <AppIcon name="clipboard" size="xs" /> 复制结果
             </button>
           </div>
@@ -135,7 +141,7 @@
 <script setup>
 import { reactive, ref, onMounted, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { generateStartupPlan, aiPresets } from '../lib/ai.js'
+import { generateStartupPlan, aiPresets, isAiDemoMode } from '../lib/ai.js'
 import PageHeader from '../components/ui/PageHeader.vue'
 import AppIcon from '../components/ui/AppIcon.vue'
 import ProfileExtraFields from '../components/ProfileExtraFields.vue'
@@ -177,6 +183,8 @@ const profileExtended = reactive({ ...defaultExtendedProfile })
 const loading = ref(false)
 const result = ref('')
 const error = ref('')
+const isMock = ref(false)
+const demoMode = computed(() => isAiDemoMode())
 const projectId = ref('')
 
 const projectCount = computed(() => projects.length)
@@ -233,11 +241,12 @@ async function handleGenerate() {
   error.value = ''
   result.value = ''
   try {
-    const { content } = await generateStartupPlan(
+    const { content, mock } = await generateStartupPlan(
       { ...form, ...profileExtra, ...profileExtended },
       focusProject.value
     )
     result.value = content
+    isMock.value = mock
   } catch (e) {
     error.value = e.message || '生成失败，请重试'
   } finally {

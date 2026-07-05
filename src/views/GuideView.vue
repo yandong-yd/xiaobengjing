@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-10">
+  <div class="page">
     <div class="mb-10">
-      <h1 class="text-3xl font-bold text-stone-800">新手指南</h1>
-      <p class="text-stone-500 mt-2">从选址到盈利，摆摊创业必读手册</p>
+      <h1 class="page-title">新手指南</h1>
+      <p class="page-desc">从选址到盈利，摆摊创业必读手册</p>
     </div>
 
     <div class="flex flex-wrap gap-2 mb-8">

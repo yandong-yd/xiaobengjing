@@ -1,11 +1,11 @@
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10">
+  <div class="page">
     <div class="mb-8">
       <p class="text-sm text-brand-600 font-medium mb-2 inline-flex items-center gap-1">
         <AppIcon :name="modeConfig.icon" size="xs" /> {{ modeConfig.badge }}
       </p>
-      <h1 class="text-3xl font-bold text-stone-800">{{ modeConfig.title }}</h1>
-      <p class="text-stone-500 mt-2 max-w-2xl">{{ modeConfig.subtitle }}</p>
+      <h1 class="page-title">{{ modeConfig.title }}</h1>
+      <p class="page-desc max-w-2xl">{{ modeConfig.subtitle }}</p>
     </div>
 
     <div v-if="modeConfig.tips.length" class="bg-stone-50 rounded-2xl border border-stone-200 p-5 mb-8">

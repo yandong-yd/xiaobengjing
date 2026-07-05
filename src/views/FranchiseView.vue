@@ -1,9 +1,9 @@
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10">
+  <div class="page">
     <div class="mb-8">
       <p class="text-sm text-amber-700 font-medium mb-2 inline-flex items-center gap-1"><AppIcon name="handshake" size="xs" /> 专题</p>
-      <h1 class="text-3xl font-bold text-stone-800">加盟品牌库 & 避坑指南</h1>
-      <p class="text-stone-500 mt-2 max-w-2xl">
+      <h1 class="page-title">加盟品牌库 & 避坑指南</h1>
+      <p class="page-desc max-w-2xl">
         公开信息整理，帮你搞懂「怎么选、怎么验、哪些坑别踩」。签约前务必自行核实，本站不构成投资建议。
       </p>
     </div>

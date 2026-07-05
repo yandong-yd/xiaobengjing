@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import { applyRouteSeo } from '../lib/seo.js'
 
 const routes = [
   {
@@ -91,6 +92,10 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 }
   },
+})
+
+router.afterEach((to) => {
+  applyRouteSeo(to)
 })
 
 export default router

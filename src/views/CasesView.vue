@@ -1,8 +1,8 @@
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10">
+  <div class="page">
     <div class="mb-8">
-      <h1 class="text-3xl font-bold text-stone-800">成功案例库</h1>
-      <p class="text-stone-500 mt-2">共 {{ cases.length }} 个真实故事 · 当前显示 {{ filteredCases.length }} 个</p>
+      <h1 class="page-title">成功案例库</h1>
+      <p class="page-desc">共 {{ cases.length }} 个真实故事 · 当前显示 {{ filteredCases.length }} 个</p>
     </div>
 
     <div class="bg-white rounded-2xl border border-stone-200 p-5 mb-8">

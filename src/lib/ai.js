@@ -1,4 +1,5 @@
 import { projects } from '../data/mock.js'
+import { chatCompletion, isOpenAiConfigured } from './openai.js'
 import {
   getRecommendedProjects,
   matchCreatorProfile,
@@ -165,8 +166,7 @@ export function buildProjectGuidePrompt(name, project) {
 }
 
 export function isAiDemoMode() {
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY
-  return !apiKey || apiKey.includes('your_')
+  return !isOpenAiConfigured()
 }
 
 export function generateMockProjectTailoredResponse(params, project) {
@@ -398,27 +398,8 @@ export async function generateStartupPlan(params, project = null) {
     ? `${buildStartupPrompt(params)}\n\n请重点围绕项目「${project.name}」定制，结合该项目特点给出可执行建议。`
     : buildStartupPrompt(params)
 
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY
-
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-    }),
-  })
-
-  if (!res.ok) {
-    throw new Error('服务暂时不可用，请稍后重试')
-  }
-
-  const data = await res.json()
-  return { content: data.choices[0].message.content, mock: false }
+  const content = await chatCompletion([{ role: 'user', content: prompt }], { temperature: 0.7 })
+  return { content, mock: false }
 }
 
 export function generateMockProjectGuide(name, project) {
@@ -477,23 +458,8 @@ export async function generateProjectGuide(name, project) {
   }
 
   const prompt = buildProjectGuidePrompt(name, project)
-  const apiKey = import.meta.env.VITE_OPENAI_API_KEY
-  const res = await fetch('https://api.openai.com/v1/chat/completions', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${apiKey}`,
-    },
-    body: JSON.stringify({
-      model: 'gpt-4o-mini',
-      messages: [{ role: 'user', content: prompt }],
-      temperature: 0.7,
-    }),
-  })
-
-  if (!res.ok) throw new Error('服务暂时不可用，请稍后重试')
-  const data = await res.json()
-  return { content: data.choices[0].message.content, mock: false }
+  const content = await chatCompletion([{ role: 'user', content: prompt }], { temperature: 0.7 })
+  return { content, mock: false }
 }
 
 export const aiPresets = [

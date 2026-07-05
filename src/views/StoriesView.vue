@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-6xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-stone-800 mb-2">摆摊 / 创业故事</h1>
-    <p class="text-stone-500 mb-8">
+  <div class="page">
+    <h1 class="page-title mb-2">摆摊 / 创业故事</h1>
+    <p class="page-desc mb-8">
       {{ cases.length }} 个真实路径 — 不只晒收入，更讲怎么选、怎么熬、本质要点是什么
     </p>
 

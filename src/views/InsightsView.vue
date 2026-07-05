@@ -1,7 +1,7 @@
 <template>
-  <div class="max-w-4xl mx-auto px-4 py-10">
-    <h1 class="text-3xl font-bold text-stone-800 mb-2">创业心得</h1>
-    <p class="text-stone-500 mb-8">过来人真实分享 — 抓本质，不灌鸡汤</p>
+  <div class="page">
+    <h1 class="page-title mb-2">创业心得</h1>
+    <p class="page-desc mb-8">过来人真实分享 — 抓本质，不灌鸡汤</p>
 
     <div class="space-y-6">
       <article

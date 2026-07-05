@@ -2,6 +2,18 @@
   <div class="page">
     <PageHeader :title="pageTitle" :description="pageSubtitle" />
 
+    <div class="flex flex-wrap items-center gap-2 mb-4">
+      <button
+        type="button"
+        class="text-xs px-2.5 py-1 rounded-full font-medium border transition-colors inline-flex items-center gap-1"
+        :class="showFavoritesOnly ? 'bg-stone-900 text-white border-stone-900' : 'btn-pill-inactive'"
+        @click="toggleFavoritesOnly"
+      >
+        ★ 我的收藏
+        <span v-if="favorites.count" class="opacity-80">({{ favorites.count }})</span>
+      </button>
+    </div>
+
     <div v-if="!route.query.mode" class="flex flex-wrap gap-1.5 mb-4">
       <router-link
         v-for="m in workModeFilters"
@@ -156,14 +168,15 @@
     </div>
     <div v-else class="text-center py-12 text-stone-400">
       <AppIcon name="search" size="xl" class="mx-auto mb-2 text-stone-300" />
-      <p class="text-sm">没有匹配的项目，试试放宽条件</p>
-      <button class="mt-3 text-sm text-brand-600 hover:underline" @click="resetFilters">清除筛选</button>
+      <p class="text-sm">{{ showFavoritesOnly ? '还没有收藏项目，点卡片右上角 ☆ 收藏' : '没有匹配的项目，试试放宽条件' }}</p>
+      <button v-if="showFavoritesOnly" class="mt-3 text-sm text-brand-600 hover:underline" @click="toggleFavoritesOnly">查看全部项目</button>
+      <button v-else class="mt-3 text-sm text-brand-600 hover:underline" @click="resetFilters">清除筛选</button>
     </div>
   </div>
 </template>
 
 <script setup>
-import { reactive, computed, watch } from 'vue'
+import { reactive, computed, watch, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import ProjectCard from '../components/ProjectCard.vue'
 import PageHeader from '../components/ui/PageHeader.vue'
@@ -171,6 +184,7 @@ import AppIcon from '../components/ui/AppIcon.vue'
 import IconLabel from '../components/ui/IconLabel.vue'
 import ProfileExtraFields from '../components/ProfileExtraFields.vue'
 import { projects, searchProjects, matchCreatorProfile } from '../data/mock.js'
+import { useFavoritesStore } from '../stores/favorites.js'
 import {
   ageGroups,
   occupations,
@@ -210,6 +224,16 @@ const pageSubtitle = computed(() => {
 
 const route = useRoute()
 const router = useRouter()
+const favorites = useFavoritesStore()
+const showFavoritesOnly = ref(route.query.fav === '1')
+
+function toggleFavoritesOnly() {
+  showFavoritesOnly.value = !showFavoritesOnly.value
+  const query = { ...route.query }
+  if (showFavoritesOnly.value) query.fav = '1'
+  else delete query.fav
+  router.replace({ query })
+}
 
 const profileExtra = reactive({
   gender: '',
@@ -246,6 +270,7 @@ const sectorSubs = computed(() => {
 })
 
 const hasAnyFilter = computed(() =>
+  showFavoritesOnly.value ||
   filters.keyword || filters.budget || filters.category || filters.difficulty ||
   filters.fiftyEight || filters.sector || filters.sub ||
   filters.age || filters.occupation || filters.personality ||
@@ -292,6 +317,10 @@ const filteredProjects = computed(() => {
 
   list = list.filter((p) => matchCreatorProfile(p, profileFilters.value))
 
+  if (showFavoritesOnly.value) {
+    list = list.filter((p) => favorites.has(p.id))
+  }
+
   if (filters.sort === 'cost-asc') list.sort((a, b) => a.cost_min - b.cost_min)
   if (filters.sort === 'income-desc') list.sort((a, b) => b.income_max - a.income_max)
 
@@ -322,6 +351,7 @@ function setFiftyEight(id) {
 }
 
 function resetFilters() {
+  showFavoritesOnly.value = false
   Object.assign(filters, {
     keyword: '', budget: '', category: '', difficulty: '', sort: 'default',
     budgetMin: null, budgetMax: null, fiftyEight: '', sector: '', sub: '',
@@ -335,6 +365,7 @@ function resetFilters() {
 }
 
 watch(() => route.query, (q) => {
+  showFavoritesOnly.value = q.fav === '1'
   if (q.category) filters.category = q.category
   if (q.sector) filters.sector = q.sector
   if (q.sub) filters.sub = q.sub
