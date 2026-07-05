@@ -1,0 +1,93 @@
+/** 创业难题库 — 提前预演 + 有效建议 */
+
+export const challengeCategories = [
+  { id: 'money', label: '资金预算', icon: 'money' },
+  { id: 'family', label: '家庭背景', icon: 'users' },
+  { id: 'time', label: '时间与兼职', icon: 'clock' },
+  { id: 'skill', label: '技能与入门', icon: 'tools' },
+  { id: 'mind', label: '心态与坚持', icon: 'lightbulb' },
+  { id: 'policy', label: '证照与合规', icon: 'clipboard' },
+]
+
+export const challenges = [
+  {
+    id: 1,
+    category: 'money',
+    title: '预算只有两三千，够不够启动？',
+    problem: '很多人以为创业一定要几万，其实大量项目 500-3000 可试水。',
+    advice: ['优先选设备可二手、原料可小批的项目', '别第一天租一年摊位', '用本站账单计算器含「时间成本」', '兼职项目先零摊成本验证'],
+    links: [{ to: '/calculator', label: '账单计算器' }, { to: '/projects?budget=3000', label: '3000元内项目' }],
+  },
+  {
+    id: 2,
+    category: 'money',
+    title: '日赚看起来不错，为什么月底还是没钱？',
+    problem: '没算自己出摊时间、损耗、坏单、平台抽成，账面利润≠真实盈利。',
+    advice: ['必须扣「机会成本」：同样时间去打工多少钱', '餐饮算损耗 5-10%', '连续记账21天再下结论', '别用峰值日收入规划生活费'],
+    links: [{ to: '/calculator', label: '算真实盈利' }],
+  },
+  {
+    id: 3,
+    category: 'family',
+    title: '配偶不支持/家人帮不上怎么办？',
+    problem: '一个人做必须选 staff_min=1 的项目，且时间不能占满全天。',
+    advice: ['选手工、线上、周末市集类', '别选必须2人餐饮高峰项目', '先做出成绩再争取家人理解', '社区定点比流动摊更稳'],
+    links: [{ to: '/guide', label: '新手指南' }, { to: '/part-time', label: '兼职项目' }],
+  },
+  {
+    id: 4,
+    category: 'family',
+    title: '带娃/照护老人，怎么创业？',
+    problem: '时间碎、不能离身太远、不能深夜出摊。',
+    advice: ['居家办公：写作、剪辑、手工网店', '手工周末市集，平日在家做', '社区便民服务（短时段）', '避开餐饮夜宵、重体力'],
+    links: [{ to: '/remote', label: '居家办公' }],
+  },
+  {
+    id: 5,
+    category: 'time',
+    title: '上班党只有周末，能做吗？',
+    problem: '可以，但要选「周末有效」而非「必须每天出摊」的项目。',
+    advice: ['周末市集、活动摄影、展会促销', '平日居家备货/接单', '别选损耗大的日配餐饮（除非有人帮备料）', '算时薪：周末两天是否 worth it'],
+    links: [{ to: '/part-time', label: '兼职副业专题' }],
+  },
+  {
+    id: 6,
+    category: 'skill',
+    title: '什么都不会，从哪学？',
+    problem: '零基础最常见，顺序错了会白花钱。',
+    advice: ['跟摊学 > 短期培训 > 纯看视频', '先试3天再采购设备', '选「简单」难度项目', '用投资顾问匹配「暂无技能」画像'],
+    links: [{ to: '/ai', label: '投资顾问定制' }],
+  },
+  {
+    id: 7,
+    category: 'skill',
+    title: 'Former 工厂/文员，适合什么？',
+    problem: '不同前职业有可迁移能力，别盲目跟风餐饮。',
+    advice: ['工厂：耐心+体力→卤味、洗鞋、组装类', '文员：细致→手工、代运营、表格模板', '销售：餐饮零售、社群团购', '在投资顾问里填「前职业」精准匹配'],
+    links: [{ to: '/ai', label: '填前职业匹配' }],
+  },
+  {
+    id: 8,
+    category: 'mind',
+    title: '干了半个月没起色，要换项目吗？',
+    problem: '多数不是项目错，是位置、时段、话术问题。',
+    advice: ['先按「生意很差怎么办」排查', '连续7天换方向/换时段试', '减备货别硬扛', '7天仍无改善再考虑换品类'],
+    links: [{ to: '/guide', label: '生意差怎么办' }],
+  },
+  {
+    id: 9,
+    category: 'policy',
+    title: '要不要办执照、健康证？',
+    problem: '因项目而异，不办可能被罚，乱办也浪费。',
+    advice: ['接触入口食品：健康证必须', '手工/线上/维修：多数不要', '长期固定点位：建议个体户', '市集快闪：先问主办方要求'],
+    links: [{ to: '/guide', label: '证照指南' }],
+  },
+  {
+    id: 10,
+    category: 'policy',
+    title: '加盟还是自营？',
+    problem: '小预算容易被「快招」割韭菜。',
+    advice: ['3000-5000 预算：优先自营跟摊学', '查商务部备案', '问能否自己进货、退出成本', '本站加盟专题含避坑清单+品牌库'],
+    links: [{ to: '/franchise', label: '加盟避坑专题' }],
+  },
+]

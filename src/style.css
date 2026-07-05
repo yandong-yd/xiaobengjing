@@ -1,0 +1,252 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  --color-accent-50: #fef2f2;
+  --color-accent-100: #fee2e2;
+  --color-accent-200: #fecaca;
+  --color-accent-400: #f87171;
+  --color-accent-500: #ef4444;
+  --color-accent-600: #e8384f;
+  --color-accent-700: #c92f3f;
+  --color-accent-800: #a12430;
+  --color-accent-900: #7c1d24;
+}
+
+body {
+  @apply bg-stone-50 text-stone-800 antialiased text-sm leading-normal;
+}
+
+@layer components {
+  .app-container {
+    @apply max-w-6xl mx-auto px-4;
+  }
+
+  .app-container-narrow {
+    @apply max-w-5xl mx-auto px-4;
+  }
+
+  .page {
+    @apply max-w-6xl mx-auto px-4 py-6 md:py-8;
+  }
+
+  .page-narrow {
+    @apply max-w-5xl mx-auto px-4 py-6 md:py-8;
+  }
+
+  .section {
+    @apply max-w-6xl mx-auto px-4 py-8 md:py-10;
+  }
+
+  .section-tight {
+    @apply max-w-6xl mx-auto px-4 py-6;
+  }
+
+  .section-muted {
+    @apply bg-stone-100/80 border-y border-stone-200/80;
+  }
+
+  .page-title {
+    @apply text-xl md:text-2xl font-semibold text-stone-900 tracking-tight;
+  }
+
+  .page-desc {
+    @apply text-sm text-stone-500 mt-1;
+  }
+
+  .section-head {
+    @apply flex items-end justify-between gap-3 mb-4;
+  }
+
+  .section-title {
+    @apply text-base md:text-lg font-bold text-stone-900 border-l-2 border-accent-600 pl-2.5;
+  }
+
+  .section-desc {
+    @apply text-xs md:text-sm text-stone-500 mt-0.5;
+  }
+
+  .link-more {
+    @apply text-xs md:text-sm text-stone-500 hover:text-accent-700 hover:underline font-medium whitespace-nowrap shrink-0;
+  }
+
+  .card {
+    @apply bg-white rounded-lg border border-stone-200 shadow-sm;
+  }
+
+  .card-hover {
+    @apply bg-white rounded-md border border-stone-200/80 overflow-hidden transition-all duration-150 hover:border-stone-400;
+  }
+
+  .card-body {
+    @apply p-3.5 md:p-4;
+  }
+
+  .panel {
+    @apply bg-white rounded-lg border border-stone-200 shadow-sm p-4;
+  }
+
+  .panel-accent {
+    @apply rounded-lg border p-4;
+  }
+
+  .panel-violet {
+    @apply rounded-lg border border-violet-200 bg-violet-50/60 p-4;
+  }
+
+  .panel-brand {
+    @apply rounded-lg border border-brand-200 bg-brand-50/80 p-4;
+  }
+
+  .panel-amber {
+    @apply rounded-lg border border-amber-200 bg-amber-50/80 p-4;
+  }
+
+  .label {
+    @apply block text-xs font-medium text-stone-600 mb-1;
+  }
+
+  .input,
+  .select {
+    @apply w-full px-3 py-2 text-sm border border-stone-200 rounded-lg bg-white
+      focus:outline-none focus:border-brand-400 focus:ring-2 focus:ring-brand-500/15;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors bg-brand-500 text-white hover:bg-brand-600;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-1.5 px-3 py-1.5 text-sm font-medium rounded-lg transition-colors bg-white border border-stone-200 text-stone-600 hover:border-stone-400 hover:text-stone-900;
+  }
+
+  .btn-pill {
+    @apply rounded-full;
+  }
+
+  .btn-pill-active {
+    @apply rounded-full bg-brand-500 text-white border border-brand-500 px-3 py-1.5 text-sm font-medium;
+  }
+
+  .btn-pill-inactive {
+    @apply rounded-full bg-white border border-stone-200 text-stone-600 hover:border-brand-300 px-3 py-1.5 text-sm font-medium transition-colors;
+  }
+
+  .badge {
+    @apply inline-flex items-center text-[11px] px-1.5 py-0.5 rounded font-medium leading-tight;
+  }
+
+  .badge-neutral {
+    @apply inline-flex items-center text-[11px] px-1.5 py-0.5 rounded font-medium leading-tight bg-stone-100 text-stone-600;
+  }
+
+  .badge-brand {
+    @apply inline-flex items-center text-[11px] px-1.5 py-0.5 rounded font-medium leading-tight bg-brand-50 text-brand-700;
+  }
+
+  .meta-line {
+    @apply text-xs text-stone-500 flex items-center gap-2 flex-wrap;
+  }
+
+  .hot-badge {
+    @apply inline-flex items-center bg-accent-600 text-white text-[10px] px-1.5 py-0.5 rounded font-bold leading-tight;
+  }
+
+  .grid-cards {
+    @apply grid sm:grid-cols-2 lg:grid-cols-3 gap-3;
+  }
+
+  .grid-cards-4 {
+    @apply grid sm:grid-cols-2 lg:grid-cols-4 gap-3;
+  }
+
+  .grid-tiles {
+    @apply grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3;
+  }
+
+  .nav-link {
+    @apply text-sm text-stone-600 hover:text-accent-700 transition-colors;
+  }
+
+  .nav-link-active {
+    @apply text-accent-700 font-medium;
+  }
+
+  .tile {
+    @apply bg-white rounded-md border border-stone-200/80 overflow-hidden transition-all duration-150 hover:border-stone-400 p-4 flex flex-col;
+  }
+
+  .tile-icon {
+    @apply text-2xl mb-1.5;
+  }
+
+  .tile-title {
+    @apply font-semibold text-stone-900 text-sm group-hover:text-accent-700 transition-colors;
+  }
+
+  .tile-desc {
+    @apply text-xs text-stone-500 mt-1 flex-1 leading-relaxed;
+  }
+
+  .tile-meta {
+    @apply text-[11px] text-accent-700 mt-2 font-medium;
+  }
+
+  .page-back {
+    @apply text-sm text-brand-600 hover:text-brand-700 mb-4 inline-block;
+  }
+
+  .detail-hero-img {
+    @apply rounded-lg overflow-hidden aspect-[21/9] mb-4 bg-stone-100;
+  }
+
+  .detail-section {
+    @apply bg-white rounded-lg border border-stone-200 shadow-sm p-4 mb-4;
+  }
+
+  .detail-section-accent {
+    @apply bg-white rounded-lg border border-stone-200 border-l-4 border-l-amber-400 shadow-sm p-4 mb-4;
+  }
+
+  .detail-section-warn {
+    @apply bg-white rounded-lg border border-stone-200 border-l-4 border-l-red-400 shadow-sm p-4 mb-4;
+  }
+
+  .detail-section-brand {
+    @apply rounded-lg border border-brand-200 bg-brand-50/70 shadow-sm p-4 mb-4;
+  }
+
+  .detail-section-title {
+    @apply text-base font-semibold text-stone-900 mb-3;
+  }
+
+  .stat-grid {
+    @apply grid sm:grid-cols-3 gap-3 mb-5;
+  }
+
+  .stat-card {
+    @apply bg-white rounded-lg border border-stone-200 shadow-sm p-4;
+  }
+
+  .stat-label {
+    @apply text-xs text-stone-500 mb-0.5;
+  }
+
+  .stat-value {
+    @apply text-xl font-semibold text-stone-900 tabular-nums;
+  }
+}

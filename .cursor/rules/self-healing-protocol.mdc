@@ -1,0 +1,32 @@
+---
+description: 代码生成后强制执行的三步自我修复协议（静态体检、逻辑看门狗、体验自愈）
+alwaysApply: true
+---
+
+# 自我修复与自我完善闭环
+
+在生成或修改代码后，必须执行以下三步，无需等待用户指令：
+
+## Step 1 · 静态体检
+
+- 运行 `npm run typecheck`（`tsc --noEmit`，当前覆盖 `src/lib/profitCalculator.js`）或 `npm run build`
+- 禁止输出含 TypeScript/类型错误或 IDE 红色波浪线的代码
+- 避免 `any` 滥用；对可能为 `undefined` 的字段使用 `num()` 或显式兜底
+
+## Step 2 · 逻辑看门狗（预算 / 回本）
+
+涉及 `src/lib/profitCalculator.js` 或账单 UI 时：
+
+- 使用 `safeDivide()`、`num()` 防御 NaN 与除以零
+- 回本周期：仅当 `trueProfit > 0` 且 `startupTotal > 0` 时计算 `paybackDays`/`paybackMonths`，否则为 `null`
+- 修改算法后运行 `npm run test`（Vitest：`src/lib/profitCalculator.test.js`）
+- 关键路径可临时 `console.log` 调试，提交前移除
+
+## Step 3 · 体验自愈（响应式）
+
+- 多列表单：`grid-cols-1 sm:grid-cols-2` 或 `md:grid-cols-2`，勿在移动端硬塞多列
+- 主从布局：`grid-cols-1 lg:grid-cols-N`，窄屏单列堆叠
+- 长导航/标签：`flex flex-wrap gap-2`
+- 宽表格：`overflow-x-auto`
+
+完整校验：`npm run verify`（typecheck + test + build）

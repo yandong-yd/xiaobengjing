@@ -1,0 +1,32 @@
+# 小本经 xiaobenjing.com — 静态站点 Nginx 示例
+# 将 dist/ 目录内容上传到服务器，例如 /var/www/xiaobenjing
+
+server {
+    listen 80;
+    listen [::]:80;
+    server_name xiaobenjing.com www.xiaobenjing.com;
+
+    root /var/www/xiaobenjing;
+    index index.html;
+
+    # SPA：除静态资源外均回退 index.html
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    location /assets/ {
+        expires 30d;
+        add_header Cache-Control "public, immutable";
+    }
+
+    location /images/ {
+        expires 7d;
+        add_header Cache-Control "public";
+    }
+
+    gzip on;
+    gzip_types text/css application/javascript application/json image/svg+xml;
+}
+
+# HTTPS：实名认证并购买域名后，用 certbot 或云厂商免费证书
+# certbot --nginx -d xiaobenjing.com -d www.xiaobenjing.com
