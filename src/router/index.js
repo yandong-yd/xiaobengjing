@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import { applyRouteSeo } from '../lib/seo.js'
+import { trackBaiduPageview } from '../lib/baiduAnalytics.js'
 
 const routes = [
   {
@@ -96,6 +97,7 @@ const router = createRouter({
 
 router.afterEach((to) => {
   applyRouteSeo(to)
+  trackBaiduPageview(to.fullPath)
 })
 
 export default router
