@@ -271,20 +271,16 @@ body {
     @apply text-base font-semibold text-[#1f2328] mb-3 mt-6;
   }
 
-  .article-tag {
-    @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full border;
-  }
-
   .article-tag-dark {
-    @apply article-tag bg-[#1f2328] text-white border-[#1f2328];
+    @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full border bg-[#1f2328] text-white border-[#1f2328];
   }
 
   .article-tag-muted {
-    @apply article-tag bg-[#f6f8fa] text-[#1f2328] border-[#d0d7de];
+    @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full border bg-[#f6f8fa] text-[#1f2328] border-[#d0d7de];
   }
 
   .article-tag-outline {
-    @apply article-tag bg-white text-[#656d76] border-[#d0d7de];
+    @apply inline-flex items-center px-3 py-1 text-sm font-medium rounded-full border bg-white text-[#656d76] border-[#d0d7de];
   }
 
   .data-table-wrap {
