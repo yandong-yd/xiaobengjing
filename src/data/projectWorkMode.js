@@ -132,10 +132,10 @@ export function countByWorkMode(projects) {
 
 export function workModeBadgeClass(modeId) {
   const map = {
-    stall: 'bg-amber-100 text-amber-800',
-    parttime: 'bg-blue-100 text-blue-800',
-    remote: 'bg-green-100 text-green-800',
-    freelance: 'bg-violet-100 text-violet-800',
+    stall: 'bg-[#f6f8fa] text-[#1f2328] border border-[#d0d7de]',
+    parttime: 'bg-[#1f2328] text-white border border-[#1f2328]',
+    remote: 'bg-white text-[#1f2328] border border-[#d0d7de]',
+    freelance: 'bg-[#eaeef2] text-[#1f2328] border border-[#d0d7de]',
   }
-  return map[modeId] || 'bg-stone-100 text-stone-600'
+  return map[modeId] || 'bg-[#f6f8fa] text-[#656d76] border border-[#d0d7de]'
 }

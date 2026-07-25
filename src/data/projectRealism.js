@@ -416,7 +416,7 @@ export const defaultHandcraftRealism = {
 }
 
 export const weatherLevelStyle = {
-  高: 'bg-red-100 text-red-700',
-  中: 'bg-yellow-100 text-yellow-700',
-  低: 'bg-green-100 text-green-700',
+  高: 'bg-[#1f2328] text-white',
+  中: 'bg-[#eaeef2] text-[#1f2328]',
+  低: 'bg-[#f6f8fa] text-[#656d76] border border-[#d0d7de]',
 }
