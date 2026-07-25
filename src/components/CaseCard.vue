@@ -1,6 +1,6 @@
 <template>
   <router-link :to="`/case/${caseItem.id}`" class="group card-hover">
-    <div class="aspect-[5/3] overflow-hidden bg-stone-100">
+    <div class="aspect-[5/3] overflow-hidden bg-[#f6f8fa]">
       <CoverImage
         :src="caseItem.image"
         :alt="caseItem.image_alt || caseItem.title"
@@ -9,19 +9,19 @@
       />
     </div>
     <div class="card-body">
-      <h3 class="font-semibold text-sm text-stone-900 group-hover:text-accent-700 transition-colors mb-1.5 line-clamp-2 leading-snug">
+      <h3 class="font-semibold text-sm text-[#1f2328] group-hover:underline transition-colors mb-1.5 line-clamp-2 leading-snug">
         {{ caseItem.title }}
       </h3>
 
-      <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-stone-500 mb-1.5">
+      <div class="flex flex-wrap gap-x-3 gap-y-0.5 text-xs text-[#656d76] mb-1.5">
         <span class="inline-flex items-center gap-1">
-          <AppIcon name="pin" size="xs" class="text-stone-400" />
+          <AppIcon name="pin" size="xs" class="text-[#8c959f]" />
           {{ caseItem.city }}
         </span>
         <span>投入 {{ caseItem.cost }} 元</span>
       </div>
 
-      <p class="text-xs text-accent-700 font-semibold mb-2">
+      <p class="text-xs text-[#1f2328] font-semibold mb-2">
         月利润约 {{ caseItem.monthly_profit.toLocaleString() }} 元
       </p>
 
