@@ -49,7 +49,19 @@ VITE_OPENAI_API_KEY=your_openai_api_key
 npm run build
 ```
 
-可部署到 Vercel、Netlify 等静态托管平台。
+可部署到 Vercel、Netlify 等静态托管，或自建 Nginx。
+
+**腾讯云 Ubuntu（备案期间用 IP）：** 见 [`deploy/README.md`](deploy/README.md)。
+
+```bash
+# 服务器一次性初始化
+scp deploy/setup-ubuntu.sh root@公网IP:~/
+ssh root@公网IP 'sudo bash setup-ubuntu.sh'
+
+# 本机构建并上传
+cp .env.example .env   # 备案前 VITE_SITE_URL=http://公网IP
+./deploy/deploy.sh root@公网IP
+```
 
 ## 页面路由
 
