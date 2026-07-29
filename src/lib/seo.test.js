@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { ROUTE_META } from './seo.js'
+import { ROUTE_META, listPrerenderRoutes, resolveRouteSeo, normalizeSeo } from './seo.js'
 
 describe('ROUTE_META TDK uniqueness', () => {
   const entries = Object.entries(ROUTE_META)
@@ -55,5 +55,22 @@ describe('ROUTE_META TDK uniqueness', () => {
       expect(len, `${name} desc too short`).toBeGreaterThanOrEqual(40)
       expect(len, `${name} desc too long`).toBeLessThanOrEqual(160)
     }
+  })
+})
+
+describe('prerender route SEO', () => {
+  it('lists static + detail routes', () => {
+    const routes = listPrerenderRoutes()
+    expect(routes.length).toBeGreaterThan(50)
+    expect(routes.some((r) => r.path === '/calculator')).toBe(true)
+    expect(routes.some((r) => r.path.startsWith('/project/'))).toBe(true)
+  })
+
+  it('produces different titles for different pages', () => {
+    const a = normalizeSeo(resolveRouteSeo({ name: 'calculator', path: '/calculator' }))
+    const b = normalizeSeo(resolveRouteSeo({ name: 'project-detail', path: '/project/1', params: { id: '1' } }))
+    expect(a.title).not.toBe(b.title)
+    expect(a.description).not.toBe(b.description)
+    expect(a.keywords).not.toBe(b.keywords)
   })
 })

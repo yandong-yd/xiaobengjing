@@ -1,9 +1,12 @@
-import { getProjectById, getCaseById } from '../data/mock.js'
-import { getFranchiseById } from '../data/franchises.js'
+import { getProjectById, getCaseById, projects, cases } from '../data/mock.js'
+import { getFranchiseById, franchises } from '../data/franchises.js'
 
 export const SITE_NAME = '小本经'
 export const SITE_TAGLINE = '从小本到老板 · 摆摊手册'
-export const SITE_URL = import.meta.env.VITE_SITE_URL || 'https://www.xiaobenjing.com'
+export const SITE_URL =
+  (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_SITE_URL) ||
+  (typeof process !== 'undefined' && process.env && process.env.VITE_SITE_URL) ||
+  'https://www.xiaobenjing.com'
 
 const DEFAULT_KEYWORDS = [
   '小本经',
@@ -119,10 +122,8 @@ function setMeta(attr, key, content) {
   el.setAttribute('content', content)
 }
 
-/**
- * @param {{ title?: string, description?: string, keywords?: string[]|string, path?: string, image?: string, useSiteSuffix?: boolean }} opts
- */
-export function applySeo({
+/** 规范化 SEO 字段（供浏览器与预渲染共用） */
+export function normalizeSeo({
   title,
   description,
   keywords,
@@ -137,23 +138,43 @@ export function applySeo({
       : title
   const desc = description || DEFAULT_DESC
   const kw = Array.isArray(keywords) ? joinKeywords(keywords) : keywords || joinKeywords(DEFAULT_KEYWORDS)
-  const base = SITE_URL.replace(/\/$/, '')
-  const cleanPath = !path || path === '/' ? '/' : path.startsWith('/') ? path : `/${path}`
+  const base = String(SITE_URL).replace(/\/$/, '')
+  const cleanPath = !path || path === '/' ? '/' : path.startsWith('/') ? path.split('?')[0] : `/${path.split('?')[0]}`
   const url = `${base}${cleanPath === '/' ? '/' : cleanPath}`
-  const ogImage = image || `${base}/favicon.svg`
+  const ogImage = image
+    ? image.startsWith('http')
+      ? image
+      : `${base}${image.startsWith('/') ? image : `/${image}`}`
+    : `${base}/favicon.svg`
 
-  document.title = pageTitle
-  setMeta('name', 'description', desc)
-  setMeta('name', 'keywords', kw)
-  setMeta('property', 'og:title', pageTitle)
-  setMeta('property', 'og:description', desc)
-  setMeta('property', 'og:url', url)
+  return {
+    title: pageTitle,
+    description: desc,
+    keywords: kw,
+    path: cleanPath,
+    url,
+    image: ogImage,
+    siteName: `${SITE_NAME} · 摆摊手册`,
+  }
+}
+
+/**
+ * @param {{ title?: string, description?: string, keywords?: string[]|string, path?: string, image?: string, useSiteSuffix?: boolean }} opts
+ */
+export function applySeo(opts = {}) {
+  const seo = normalizeSeo(opts)
+  document.title = seo.title
+  setMeta('name', 'description', seo.description)
+  setMeta('name', 'keywords', seo.keywords)
+  setMeta('property', 'og:title', seo.title)
+  setMeta('property', 'og:description', seo.description)
+  setMeta('property', 'og:url', seo.url)
   setMeta('property', 'og:type', 'website')
-  setMeta('property', 'og:site_name', `${SITE_NAME} · 摆摊手册`)
-  setMeta('property', 'og:image', ogImage)
+  setMeta('property', 'og:site_name', seo.siteName)
+  setMeta('property', 'og:image', seo.image)
   setMeta('name', 'twitter:card', 'summary')
-  setMeta('name', 'twitter:title', pageTitle)
-  setMeta('name', 'twitter:description', desc)
+  setMeta('name', 'twitter:title', seo.title)
+  setMeta('name', 'twitter:description', seo.description)
 
   let canonical = document.querySelector('link[rel="canonical"]')
   if (!canonical) {
@@ -161,7 +182,7 @@ export function applySeo({
     canonical.setAttribute('rel', 'canonical')
     document.head.appendChild(canonical)
   }
-  canonical.setAttribute('href', url)
+  canonical.setAttribute('href', seo.url)
 }
 
 function seoForProjectsQuery(route) {
@@ -176,7 +197,7 @@ function seoForProjectsQuery(route) {
       description:
         '聚焦出摊/线下形态：夜市、市集、社区定点等可落地项目，按预算与难度筛选，适合想直接上手摆摊的人。',
       keywords: ['出摊项目', '线下摆摊', '夜市摆摊', '市集创业', '社区摆摊', '小本经'],
-      path: route.fullPath,
+      path: route.path || '/projects',
     }
   }
 
@@ -185,7 +206,7 @@ function seoForProjectsQuery(route) {
       title: `${tag}相关创业项目_低成本起步推荐`,
       description: `浏览标签「${tag}」下的小本创业与摆摊项目，对比启动成本、难度与收入区间，找到更匹配的方向。`,
       keywords: [tag, `${tag}创业`, `${tag}摆摊`, '创业项目', '小本创业', '小本经'],
-      path: route.fullPath,
+      path: route.path || '/projects',
     }
   }
 
@@ -194,11 +215,11 @@ function seoForProjectsQuery(route) {
       title: `${category}创业项目大全_小本起步方案`,
       description: `「${category}」方向低成本创业项目合集：启动资金、日收入参考与操作要点，适合想做${category}赛道的新手。`,
       keywords: [category, `${category}创业`, `${category}项目`, '小本创业', '摆摊', '小本经'],
-      path: route.fullPath,
+      path: route.path || '/projects',
     }
   }
 
-  return { ...ROUTE_META.projects, path: route.path }
+  return { ...ROUTE_META.projects, path: route.path || '/projects' }
 }
 
 function seoForProjectDetail(project, path) {
@@ -262,44 +283,68 @@ function seoForFranchiseDetail(franchise, path) {
   }
 }
 
-export function applyRouteSeo(route) {
+/** 纯函数：根据路由算出 SEO 配置（不碰 DOM） */
+export function resolveRouteSeo(route) {
   const name = route.name
   const id = route.params?.id
 
   if (name === 'project-detail') {
     const p = getProjectById(id)
-    if (p) {
-      applySeo(seoForProjectDetail(p, route.path))
-      return
-    }
+    if (p) return { ...seoForProjectDetail(p, route.path), useSiteSuffix: true }
   }
 
   if (name === 'case-detail') {
     const c = getCaseById(id)
-    if (c) {
-      applySeo(seoForCaseDetail(c, route.path))
-      return
-    }
+    if (c) return { ...seoForCaseDetail(c, route.path), useSiteSuffix: true }
   }
 
   if (name === 'franchise-detail') {
     const f = getFranchiseById(id)
-    if (f) {
-      applySeo(seoForFranchiseDetail(f, route.path))
-      return
-    }
+    if (f) return { ...seoForFranchiseDetail(f, route.path), useSiteSuffix: true }
   }
 
   if (name === 'projects') {
-    applySeo(seoForProjectsQuery(route))
-    return
+    return { ...seoForProjectsQuery(route), useSiteSuffix: true }
   }
 
   const meta = ROUTE_META[name]
   if (meta) {
-    applySeo({ ...meta, path: route.path, useSiteSuffix: name !== 'home' })
-    return
+    return { ...meta, path: route.path, useSiteSuffix: name !== 'home' }
   }
 
-  applySeo({ path: route.path })
+  return { path: route.path, useSiteSuffix: true }
+}
+
+export function applyRouteSeo(route) {
+  applySeo(resolveRouteSeo(route))
+}
+
+/** 预渲染用的全部路由清单 */
+export function listPrerenderRoutes() {
+  const staticRoutes = [
+    { name: 'home', path: '/' },
+    { name: 'categories', path: '/categories' },
+    { name: 'projects', path: '/projects' },
+    { name: 'cases', path: '/cases' },
+    { name: 'ai', path: '/ai' },
+    { name: 'guide', path: '/guide' },
+    { name: 'calculator', path: '/calculator' },
+    { name: 'part-time', path: '/part-time' },
+    { name: 'remote', path: '/remote' },
+    { name: 'challenges', path: '/challenges' },
+    { name: 'insights', path: '/insights' },
+    { name: 'stories', path: '/stories' },
+    { name: 'franchise', path: '/franchise' },
+  ]
+
+  return [
+    ...staticRoutes,
+    ...projects.map((p) => ({ name: 'project-detail', path: `/project/${p.id}`, params: { id: String(p.id) } })),
+    ...cases.map((c) => ({ name: 'case-detail', path: `/case/${c.id}`, params: { id: String(c.id) } })),
+    ...franchises.map((f) => ({
+      name: 'franchise-detail',
+      path: `/franchise/${f.id}`,
+      params: { id: String(f.id) },
+    })),
+  ]
 }
