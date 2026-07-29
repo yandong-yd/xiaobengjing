@@ -6,7 +6,7 @@
     </div>
 
     <div class="bg-white rounded-2xl border border-stone-200 p-5 mb-8">
-      <div class="grid sm:grid-cols-3 gap-4">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
         <div>
           <label class="block text-sm font-medium text-stone-600 mb-1.5">城市</label>
           <select v-model="filters.city" class="w-full px-3 py-2 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-brand-400">
@@ -30,6 +30,14 @@
             <option v-for="tag in caseTags" :key="tag" :value="tag">{{ tag }}</option>
           </select>
         </div>
+        <div>
+          <label class="block text-sm font-medium text-stone-600 mb-1.5">排序</label>
+          <select v-model="filters.sort" class="w-full px-3 py-2 border border-stone-200 rounded-xl text-sm focus:outline-none focus:border-brand-400">
+            <option value="recommend">推荐</option>
+            <option value="profit-desc">月利润从高到低</option>
+            <option value="cost-asc">启动成本从低到高</option>
+          </select>
+        </div>
       </div>
     </div>
 
@@ -49,17 +57,22 @@ import { reactive, computed } from 'vue'
 import CaseCard from '../components/CaseCard.vue'
 import AppIcon from '../components/ui/AppIcon.vue'
 import { cases, cities } from '../data/mock.js'
+import { filterVisible, compareByRecommend } from '../lib/contentLifecycle.js'
 
-const filters = reactive({ city: '', profit: '', tag: '' })
+const filters = reactive({ city: '', profit: '', tag: '', sort: 'recommend' })
 
 const caseTags = computed(() => [...new Set(cases.flatMap((c) => c.tags))].sort())
 
-const filteredCases = computed(() =>
-  cases.filter((c) => {
+const filteredCases = computed(() => {
+  let list = filterVisible(cases).filter((c) => {
     if (filters.city && c.city !== filters.city) return false
     if (filters.profit && c.monthly_profit < Number(filters.profit)) return false
     if (filters.tag && !c.tags.includes(filters.tag)) return false
     return true
   })
-)
+  if (filters.sort === 'profit-desc') list.sort((a, b) => (b.monthly_profit || 0) - (a.monthly_profit || 0))
+  else if (filters.sort === 'cost-asc') list.sort((a, b) => (a.cost || 0) - (b.cost || 0))
+  else list.sort(compareByRecommend)
+  return list
+})
 </script>
