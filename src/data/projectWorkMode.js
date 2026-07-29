@@ -37,7 +37,7 @@ export const workModes = [
     desc: '按单/按项目接单，时间地点自主',
     route: '/remote',
     query: { tab: 'freelance' },
-    color: 'violet',
+    color: 'neutral',
   },
 ]
 

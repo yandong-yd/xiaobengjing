@@ -304,7 +304,7 @@
               :class="{
                 'bg-stone-700/80': !a.highlight,
                 'bg-amber-900/40 ring-1 ring-amber-600/50': a.highlight === 'accounting',
-                'bg-violet-900/40 ring-1 ring-violet-500/50': a.highlight === 'labor',
+                'bg-[#1f2328]/10 ring-1 ring-[#1f2328]/30': a.highlight === 'labor',
                 'bg-green-900/50 ring-2 ring-green-500/60': a.highlight === 'true',
               }"
             >
@@ -346,7 +346,7 @@
             <div class="border-t border-stone-200 pt-2 flex justify-between font-medium text-stone-700">
               <span>账面日利润</span><span>{{ formatMoney(bill.daily.accountingProfit) }} 元</span>
             </div>
-            <div class="flex justify-between text-violet-800 bg-violet-50 -mx-2 px-2 py-1.5 rounded-lg">
+            <div class="flex justify-between text-[#1f2328] bg-[#f6f8fa] -mx-2 px-2 py-1.5 rounded-lg">
               <span>自己的时间成本（{{ bill.labor.totalHoursPerPerson }}h×{{ form.staffCount }}人×{{ form.jobHourlyWage }}元/时）</span>
               <span>-{{ formatMoney(bill.daily.opportunityTotalDaily) }}</span>
             </div>
@@ -366,7 +366,7 @@
             <div class="flex justify-between"><span>支付手续费</span><span>-{{ formatMoney(bill.monthly.paymentFee) }}</span></div>
             <div v-if="bill.monthly.paidLabor" class="flex justify-between"><span>外聘帮工</span><span>-{{ formatMoney(bill.monthly.paidLabor) }}</span></div>
             <div class="flex justify-between font-medium"><span>账面月利润</span><span>{{ formatMoney(bill.monthly.accountingProfit) }} 元</span></div>
-            <div class="flex justify-between text-violet-800"><span>自己的时间成本</span><span>-{{ formatMoney(bill.monthly.opportunity) }}</span></div>
+            <div class="flex justify-between text-[#1f2328]"><span>自己的时间成本</span><span>-{{ formatMoney(bill.monthly.opportunity) }}</span></div>
             <div class="border-t pt-2 flex justify-between font-bold">
               <span>月真实盈利</span>
               <span :class="bill.monthly.trueProfit >= 0 ? 'text-green-700' : 'text-red-600'">{{ formatMoney(bill.monthly.trueProfit) }} 元</span>
@@ -383,16 +383,16 @@
           </dl>
         </section>
 
-        <section class="bg-violet-50 rounded-lg border border-violet-200 p-5">
-          <h2 class="font-bold text-violet-900 mb-3"><IconLabel icon="trend-down" tag="span">新手期 vs 稳定期</IconLabel></h2>
+        <section class="bg-[#f6f8fa] rounded-lg border border-[#d0d7de] p-5">
+          <h2 class="font-bold text-[#1f2328] mb-3"><IconLabel icon="trend-down" tag="span">新手期 vs 稳定期</IconLabel></h2>
           <div class="grid sm:grid-cols-2 gap-4 text-sm">
             <div>
-              <p class="text-violet-600">前 {{ bill.newbie.months }} 个月</p>
-              <p class="text-2xl font-bold text-violet-900">{{ formatMoney(bill.newbie.monthlyProfit) }} 元/月</p>
+              <p class="text-[#656d76]">前 {{ bill.newbie.months }} 个月</p>
+              <p class="text-2xl font-bold text-[#1f2328]">{{ formatMoney(bill.newbie.monthlyProfit) }} 元/月</p>
             </div>
             <div>
-              <p class="text-violet-600">稳定后</p>
-              <p class="text-2xl font-bold text-violet-900">{{ formatMoney(bill.newbie.stableMonthlyProfit) }} 元/月</p>
+              <p class="text-[#656d76]">稳定后</p>
+              <p class="text-2xl font-bold text-[#1f2328]">{{ formatMoney(bill.newbie.stableMonthlyProfit) }} 元/月</p>
             </div>
           </div>
         </section>

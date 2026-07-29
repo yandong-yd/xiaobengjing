@@ -29,7 +29,7 @@
     <div class="grid grid-cols-1 md:grid-cols-5 gap-4">
       <form class="md:col-span-2 space-y-3" @submit.prevent="handleGenerate">
         <div class="panel space-y-3">
-          <p class="text-xs font-medium text-violet-700 bg-violet-50 px-2.5 py-1.5 rounded-md">你的画像</p>
+          <p class="text-xs font-medium text-[#656d76] bg-[#f6f8fa] px-2.5 py-1.5 rounded-md">你的画像</p>
 
           <p class="text-xs font-medium text-stone-600">基本信息</p>
           <div>
