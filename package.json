@@ -12,8 +12,12 @@
     "test": "vitest run",
     "test:seo": "vitest run src/lib/seo.test.js",
     "test:watch": "vitest",
-    "verify": "npm run typecheck && npm run test && npm run build",
+    "verify": "npm run typecheck && npm run test && npm run audit:covers && npm run audit:content && npm run build",
     "download:covers": "node scripts/download-covers.mjs",
+    "covers:map": "node scripts/build-cover-map.mjs",
+    "covers:suggest": "node scripts/suggest-covers.mjs",
+    "audit:covers": "node scripts/audit-covers.mjs",
+    "audit:content": "node scripts/audit-content.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "prebuild": "node scripts/generate-sitemap.mjs"
   },
