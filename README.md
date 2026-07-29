@@ -51,9 +51,10 @@ npm run build
 
 可部署到 Vercel、Netlify 等静态托管平台，或腾讯云 Nginx（见 `deploy/`）。
 
-封面与内容自更新：见 [`docs/covers.md`](docs/covers.md)。
+封面：[`docs/covers.md`](docs/covers.md) · 案例/项目库持续优化：[`docs/content-ops.md`](docs/content-ops.md)
 
 ```bash
+npm run content:health  # 推荐位 / 过期 / 低分清单
 npm run covers:map      # 生成全量封面映射
 npm run audit:covers    # 封面体检
 npm run audit:content   # 内容体检

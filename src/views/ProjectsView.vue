@@ -150,7 +150,7 @@
         <div>
           <label class="label">排序</label>
           <select v-model="filters.sort" class="select">
-            <option value="default">默认</option>
+            <option value="recommend">推荐</option>
             <option value="cost-asc">成本从低到高</option>
             <option value="income-desc">收入从高到低</option>
           </select>
@@ -184,6 +184,7 @@ import AppIcon from '../components/ui/AppIcon.vue'
 import IconLabel from '../components/ui/IconLabel.vue'
 import ProfileExtraFields from '../components/ProfileExtraFields.vue'
 import { projects, searchProjects, matchCreatorProfile } from '../data/mock.js'
+import { filterVisible, compareByRecommend } from '../lib/contentLifecycle.js'
 import { useFavoritesStore } from '../stores/favorites.js'
 import {
   ageGroups,
@@ -252,7 +253,7 @@ const filters = reactive({
   budget: '',
   category: '',
   difficulty: '',
-  sort: 'default',
+  sort: 'recommend',
   budgetMin: null,
   budgetMax: null,
   fiftyEight: '',
@@ -297,7 +298,7 @@ const profileFilters = computed(() => ({
 }))
 
 const filteredProjects = computed(() => {
-  let list = [...projects]
+  let list = filterVisible(projects)
 
   if (filters.keyword) list = searchProjects(list, filters.keyword)
   if (filters.budget) list = list.filter((p) => p.cost_min <= Number(filters.budget))
@@ -322,7 +323,8 @@ const filteredProjects = computed(() => {
   }
 
   if (filters.sort === 'cost-asc') list.sort((a, b) => a.cost_min - b.cost_min)
-  if (filters.sort === 'income-desc') list.sort((a, b) => b.income_max - a.income_max)
+  else if (filters.sort === 'income-desc') list.sort((a, b) => b.income_max - a.income_max)
+  else list.sort(compareByRecommend)
 
   return list
 })
@@ -353,7 +355,7 @@ function setFiftyEight(id) {
 function resetFilters() {
   showFavoritesOnly.value = false
   Object.assign(filters, {
-    keyword: '', budget: '', category: '', difficulty: '', sort: 'default',
+    keyword: '', budget: '', category: '', difficulty: '', sort: 'recommend',
     budgetMin: null, budgetMax: null, fiftyEight: '', sector: '', sub: '',
     age: '', occupation: '', personality: '', disability: 'none',
   })

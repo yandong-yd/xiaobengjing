@@ -73,20 +73,9 @@ npm run covers:suggest -- --type project --limit 20
 
 ## 内容自我更新与优化
 
-项目/案例会自动带上：
+完整运营手册见 [`docs/content-ops.md`](content-ops.md)。
 
-- `status`: `draft` | `published` | `archived`（默认 published）
-- `priority`: 推荐权重（完整封面/描述会加权）
-- `updated_at`: 可选手填 ISO 日期
-
-首页推荐使用 `sortPublished()`：先 `priority`，再最近更新。
-
-运营迭代建议：
-
-1. **周更**：改 `src/data/*.js` 字段 → `covers:map` → `verify` → 部署  
-2. **封面专项**：低点击项目优先换 overrides 封面  
-3. **降权**：`status: 'archived'` 或降低 `priority`  
-4. **加新项目**：至少填 `name/category/description/tags/cost_*`，跑 `covers:map`
+快捷路径：改 [`src/data/content.overrides.js`](../src/data/content.overrides.js) 的 `priority` / `updated_at` / `status` → `npm run content:health` → `verify` → 部署。
 
 ## 目录约定
 

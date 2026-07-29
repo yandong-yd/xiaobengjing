@@ -18,6 +18,7 @@
     "covers:suggest": "node scripts/suggest-covers.mjs",
     "audit:covers": "node scripts/audit-covers.mjs",
     "audit:content": "node scripts/audit-content.mjs",
+    "content:health": "node scripts/content-health.mjs",
     "prerender": "node scripts/prerender-html.mjs",
     "sitemap": "node scripts/generate-sitemap.mjs",
     "prebuild": "node scripts/generate-sitemap.mjs"
