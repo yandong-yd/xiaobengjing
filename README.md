@@ -49,7 +49,16 @@ VITE_OPENAI_API_KEY=your_openai_api_key
 npm run build
 ```
 
-可部署到 Vercel、Netlify 等静态托管平台。
+可部署到 Vercel、Netlify 等静态托管平台，或腾讯云 Nginx（见 `deploy/`）。
+
+封面与内容自更新：见 [`docs/covers.md`](docs/covers.md)。
+
+```bash
+npm run covers:map      # 生成全量封面映射
+npm run audit:covers    # 封面体检
+npm run audit:content   # 内容体检
+npm run covers:suggest -- --id 1   # 候选图（需 API Key）
+```
 
 ## 页面路由
 
