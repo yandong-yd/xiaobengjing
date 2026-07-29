@@ -32,8 +32,16 @@
           </div>
         </div>
       </div>
-      <div class="border-t border-[#21262d] mt-6 pt-4 text-xs text-center text-[#8b949e]">
-        © 2026 小本经 · 摆摊手册
+      <div class="border-t border-[#21262d] mt-6 pt-4 text-xs text-center text-[#8b949e] space-y-1.5">
+        <p>© 2026 小本经 · 摆摊手册</p>
+        <p>
+          <a
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="hover:text-white transition-colors"
+          >蜀ICP备2026042981号-1</a>
+        </p>
       </div>
     </div>
   </footer>
