@@ -208,16 +208,14 @@ import CaseCard from '../components/CaseCard.vue'
 import FaqSection from '../components/FaqSection.vue'
 
 import { projects, cases, hotTags } from '../data/mock.js'
-
 import { categories } from '../data/categories.js'
-
-
+import { sortPublished } from '../lib/contentLifecycle.js'
 
 const projectCategories = categories.filter((c) => !c.isFranchise && !c.isWorkMode)
 
-const featuredProjects = computed(() => projects.slice(0, 9))
+const featuredProjects = computed(() => sortPublished(projects).slice(0, 9))
 
-const featuredCases = computed(() => cases.slice(0, 9))
+const featuredCases = computed(() => sortPublished(cases).slice(0, 9))
 
 </script>
 

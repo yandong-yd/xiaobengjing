@@ -14,6 +14,7 @@ import { enrichPlaybook } from './projectPlaybook.js'
 import { enrichCreatorFit, matchCreatorProfile } from './creatorMatch.js'
 import { enrichStaffing } from './projectStaffing.js'
 import { enrichProjectMedia, enrichCaseMedia } from './media.js'
+import { enrichLifecycle } from '../lib/contentLifecycle.js'
 import { fiftyEightProjects } from './fiftyEightProjects.js'
 import { enrichFiftyEightGroup } from './zhaoShang58.js'
 import { zhaoShangProjects } from './zhaoShangProjects.js'
@@ -256,7 +257,10 @@ const baseProjects = [
 ]
 
 export const projects = [...baseProjects, ...extraProjects, ...handcraftProjects, ...moreProjects, ...batchProjects, ...wellnessProjects, ...marketplaceProjects, ...fiftyEightProjects, ...zhaoShangProjects, ...freelanceProjects].map((p) =>
-  enrichWorkMode(enrichProjectMedia(enrichStaffing(enrichPlaybook(enrichCreatorFit(enrichFiftyEightGroup(enrichProject(p)))))))
+  enrichLifecycle(
+    enrichWorkMode(enrichProjectMedia(enrichStaffing(enrichPlaybook(enrichCreatorFit(enrichFiftyEightGroup(enrichProject(p))))))),
+    { type: 'project' },
+  )
 )
 
 export { matchCreatorProfile, getRecommendedProjects } from './creatorMatch.js'
@@ -342,7 +346,9 @@ export const baseCases = [
   },
 ]
 
-export const cases = [...baseCases, ...extraCases, ...batchCases].map((c) => enrichCaseMedia(enrichCase(c)))
+export const cases = [...baseCases, ...extraCases, ...batchCases].map((c) =>
+  enrichLifecycle(enrichCaseMedia(enrichCase(c)), { type: 'case' }),
+)
 
 export const hotTags = [
   '夜市', '小吃', '低门槛', '宝妈适合', '学生创业',

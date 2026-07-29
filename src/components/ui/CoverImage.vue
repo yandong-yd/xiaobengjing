@@ -9,8 +9,8 @@
 </template>
 
 <script setup>
-import { ref, watch } from 'vue'
-import { getFallbackCover } from '../../data/media.js'
+import { ref, watch, computed } from 'vue'
+import { getFallbackCover, resolveCoverUrl } from '../../data/media.js'
 
 const props = defineProps({
   src: { type: String, default: '' },
@@ -19,13 +19,14 @@ const props = defineProps({
   poolKey: { type: String, default: 'market' },
 })
 
-const fallback = getFallbackCover(props.poolKey)
-const currentSrc = ref(props.src || fallback)
+const resolved = computed(() => resolveCoverUrl(props.src))
+const fallback = computed(() => getFallbackCover(props.poolKey))
+const currentSrc = ref(resolved.value || fallback.value)
 
 watch(
-  () => props.src,
-  (value) => {
-    currentSrc.value = value || getFallbackCover(props.poolKey)
+  () => [props.src, props.poolKey],
+  () => {
+    currentSrc.value = resolveCoverUrl(props.src) || getFallbackCover(props.poolKey)
   },
 )
 
