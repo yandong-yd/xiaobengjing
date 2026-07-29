@@ -1,5 +1,5 @@
 <template>
-  <section class="detail-section border-l-4 border-l-violet-400">
+  <section class="detail-section border-l-4 border-l-[#1f2328]">
     <h2 class="detail-section-title"><IconLabel icon="users" tag="span">什么人适合做这个？</IconLabel></h2>
 
     <div class="grid sm:grid-cols-2 gap-3 mb-3">
@@ -46,7 +46,7 @@
           <p class="text-stone-800">{{ shopModesText }}</p>
         </div>
       </div>
-      <p v-if="staffing.couple_suitable" class="text-xs text-rose-700 mb-1">适合夫妻店分工</p>
+      <p v-if="staffing.couple_suitable" class="text-xs text-[#656d76] mb-1">适合夫妻店分工</p>
       <p v-if="staffing.staffing_note" class="text-sm text-stone-600">{{ staffing.staffing_note }}</p>
       <ul v-if="staffing.roles?.length" class="mt-1.5 space-y-0.5">
         <li v-for="role in staffing.roles" :key="role" class="text-xs text-stone-600 flex gap-1">
@@ -170,9 +170,9 @@ const disabilityLabel = computed(() => {
 
 const disabilityBadgeClass = computed(() => {
   const d = props.fit.disability
-  if (d?.suitable === false) return 'text-red-700'
-  if (d?.levels?.length >= 2) return 'text-green-700'
-  return 'text-amber-700'
+  if (d?.suitable === false) return 'text-[#1f2328]'
+  if (d?.levels?.length >= 2) return 'text-[#656d76]'
+  return 'text-[#656d76]'
 })
 
 const disabilityLevelsText = computed(() =>

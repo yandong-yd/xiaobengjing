@@ -26,42 +26,42 @@
       </router-link>
     </div>
 
-    <div class="panel-violet mb-4">
-      <h2 class="font-semibold text-violet-900 text-sm mb-0.5"><IconLabel icon="target" tag="span">按你的情况筛选</IconLabel></h2>
-      <p class="text-[11px] text-violet-700 mb-3">年龄、性别、出摊人数、家人能否帮忙</p>
+    <div class="panel-accent mb-4">
+      <h2 class="font-semibold text-[#1f2328] text-sm mb-0.5"><IconLabel icon="target" tag="span">按你的情况筛选</IconLabel></h2>
+      <p class="text-[11px] text-[#656d76] mb-3">年龄、性别、出摊人数、家人能否帮忙</p>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 mb-3">
         <div>
-          <label class="label text-violet-800">年龄</label>
+          <label class="label text-[#1f2328]">年龄</label>
           <select v-model="filters.age" class="select">
             <option value="">不限</option>
             <option v-for="a in ageGroups" :key="a.id" :value="a.id">{{ a.label }}</option>
           </select>
         </div>
         <div>
-          <label class="label text-violet-800">职业/身份</label>
+          <label class="label text-[#1f2328]">职业/身份</label>
           <select v-model="filters.occupation" class="select">
             <option value="">不限</option>
             <option v-for="o in occupations" :key="o.id" :value="o.id">{{ o.label }}</option>
           </select>
         </div>
         <div>
-          <label class="label text-violet-800">性格</label>
+          <label class="label text-[#1f2328]">性格</label>
           <select v-model="filters.personality" class="select">
             <option value="">不限</option>
             <option v-for="p in personalities" :key="p.id" :value="p.id">{{ p.label }}</option>
           </select>
         </div>
         <div>
-          <label class="label text-violet-800">残疾等级</label>
+          <label class="label text-[#1f2328]">残疾等级</label>
           <select v-model="filters.disability" class="select">
             <option v-for="d in disabilityLevels" :key="d.id" :value="d.id">{{ d.label }}</option>
           </select>
         </div>
       </div>
       <details class="group">
-        <summary class="text-xs font-medium text-violet-800 cursor-pointer list-none flex items-center gap-1">
+        <summary class="text-xs font-medium text-[#1f2328] cursor-pointer list-none flex items-center gap-1">
           更多条件（性别 · 人数 · 家庭 · 证照）
-          <span class="text-violet-400 group-open:rotate-180 transition-transform text-[10px]">▼</span>
+          <span class="text-[#8c959f] group-open:rotate-180 transition-transform text-[10px]">▼</span>
         </summary>
         <div class="mt-2 grid sm:grid-cols-2 lg:grid-cols-3 gap-2">
           <ProfileExtraFields v-model="profileExtra" hint-family="负担重优先选手工、周末市集" />

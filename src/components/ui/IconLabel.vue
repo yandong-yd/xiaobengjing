@@ -1,6 +1,6 @@
 <template>
   <component :is="tag" class="inline-flex items-center gap-1.5">
-    <AppIcon v-if="icon" :name="icon" :size="iconSize" class="text-brand-600" />
+    <AppIcon v-if="icon" :name="icon" :size="iconSize" class="text-[#656d76]" />
     <span><slot /></span>
   </component>
 </template>

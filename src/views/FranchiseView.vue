@@ -30,9 +30,9 @@
           </li>
         </ul>
       </div>
-      <div class="bg-violet-50 rounded-2xl border border-violet-200 p-6">
-        <h3 class="font-bold text-violet-900 mb-2">小本摆摊 vs 品牌加盟</h3>
-        <p class="text-sm text-violet-800 leading-relaxed">
+      <div class="bg-[#f6f8fa] rounded-2xl border border-[#d0d7de] p-6">
+        <h3 class="font-bold text-[#1f2328] mb-2">小本摆摊 vs 品牌加盟</h3>
+        <p class="text-sm text-[#1f2328] leading-relaxed">
           预算 5000 以内、想先试水的，优先跟摊学或自营，别碰加盟费。加盟适合：有 10 万+ 预算、接受标准化、本地点位优质、且能核实备案与真实加盟店盈利的人。很多「摆摊级」项目（淀粉肠、柠檬茶）根本不需要加盟——料包培训就够。
         </p>
       </div>

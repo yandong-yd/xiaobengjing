@@ -104,10 +104,6 @@ body {
     @apply rounded-md border border-[#d0d7de] bg-[#f6f8fa] p-4;
   }
 
-  .panel-violet {
-    @apply rounded-md border border-[#d0d7de] bg-[#f6f8fa] p-4;
-  }
-
   .panel-brand {
     @apply rounded-md border border-[#d0d7de] bg-[#f6f8fa] p-4;
   }
